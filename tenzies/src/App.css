@@ -53,4 +53,10 @@ main {
   font-family: "Karla", sans-serif;
   margin-top: 2rem;
   font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.roll--btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }

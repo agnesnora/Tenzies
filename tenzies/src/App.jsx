@@ -1,17 +1,18 @@
 import "./App.css";
 import Dice from "../src/Components/Dice";
 import { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 
 /**
- * Challenge:
+ * Challenge: Update the `holdDice` function to flip
+ * the `isHeld` property on the object in the array
+ * that was clicked, based on the `id` prop passed
+ * into the function.
  *
- * Create state to hold our array of numbers. (Initialize
- * the state by calling our `allNewDice` function so it
- * loads all new dice as soon as the app loads)
- *
- * Map over the state numbers array to generate our array
- * of Die elements and render those in place of our
- * manually-written 10 Die elements.
+ * Hint: as usual, there's > 1 way to accomplish this.
+ * I'll be using `dice.map()` and checking for the `id`
+ * of the die to determine which one to flip `isHeld` on,
+ * but you can do whichever way makes the most sense to you.
  */
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     let diceArray = [];
     for (let i = 0; i < 10; i++) {
       const randomDice = Math.floor(Math.random() * 6) + 1;
-      diceArray.push(randomDice);
+      diceArray.push({ value: randomDice, isHeld: true, id: nanoid() });
     }
 
     return diceArray;
@@ -31,7 +32,27 @@ function App() {
     setDiceNumbers(allNewDice());
   }
 
-  const dieElement = diceNumbers.map((num) => <Dice key="" value={num} />);
+  function holdDice(id) {
+    setDiceNumbers((oldDice) =>
+      oldDice.map((item) => {
+        if (item.id === id) {
+          return { ...item, isHeld: !item.isHeld };
+        } else {
+          return { ...item };
+        }
+      })
+    );
+  }
+
+  const dieElement = diceNumbers.map((num) => (
+    <Dice
+      key={num.id}
+      value={num.value}
+      isHeld={num.isHeld}
+      holdDice={() => holdDice(num.id)}
+      id={num.id}
+    />
+  ));
   return (
     <>
       <main>
