@@ -2,21 +2,21 @@ import "./App.css";
 import Dice from "../src/Components/Dice";
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
-
-/**
- * Challenge: Update the `holdDice` function to flip
- * the `isHeld` property on the object in the array
- * that was clicked, based on the `id` prop passed
- * into the function.
- *
- * Hint: as usual, there's > 1 way to accomplish this.
- * I'll be using `dice.map()` and checking for the `id`
- * of the die to determine which one to flip `isHeld` on,
- * but you can do whichever way makes the most sense to you.
- */
+import Confetti from "react-confetti";
 
 function App() {
   const [diceNumbers, setDiceNumbers] = useState(allNewDice());
+  const [tenzies, setTenzies] = useState(false);
+
+  useEffect(() => {
+    const allHeld = diceNumbers.every((die) => die.isHeld);
+    const firstValue = diceNumbers[0].value;
+    const allSameValue = diceNumbers.every((die) => die.value === firstValue);
+    if (allHeld && allSameValue) {
+      setTenzies(true);
+      console.log("You won!");
+    }
+  }, [diceNumbers]);
 
   function generateNewDie() {
     return {
@@ -64,6 +64,7 @@ function App() {
   return (
     <>
       <main>
+        {tenzies ? <Confetti /> : ""}
         <h1 className="title">Tenzies</h1>
         <p className="instructions">
           Roll until all dice are the same. Click each die to freeze it at its
@@ -71,7 +72,7 @@ function App() {
         </p>
         <div className="dice--container">{dieElement}</div>
         <button className="roll--btn" onClick={roll}>
-          Roll
+          {tenzies ? "New Game" : "Roll"}
         </button>
       </main>
     </>

@@ -5,7 +5,7 @@
 body {
   margin: 0 auto;
   background-color: #0b2434;
-  padding: 20px;
+  padding: 2em;
 
   font-family: "Karla", sans-serif;
 }
@@ -21,7 +21,7 @@ main {
   height: 400px;
   max-width: 800px;
   border-radius: 5px;
-  padding: 20px;
+  padding: 3em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,4 +59,10 @@ main {
 
 .roll--btn:active {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin: 0;
 }
