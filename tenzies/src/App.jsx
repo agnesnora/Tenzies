@@ -14,7 +14,6 @@ function App() {
     const allSameValue = diceNumbers.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
-      console.log("You won!");
     }
   }, [diceNumbers]);
 
@@ -35,9 +34,14 @@ function App() {
   }
 
   function roll() {
-    setDiceNumbers((oldDice) =>
-      oldDice.map((item) => (item.isHeld ? item : generateNewDie()))
-    );
+    if (!tenzies) {
+      setDiceNumbers((oldDice) =>
+        oldDice.map((item) => (item.isHeld ? item : generateNewDie()))
+      );
+    } else {
+      setTenzies(false);
+      setDiceNumbers(allNewDice);
+    }
   }
 
   function holdDice(id) {
